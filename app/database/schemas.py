@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from datetime import date, datetime
 
 
@@ -22,6 +22,10 @@ class ClientUpdate(ClientBase):
     pass_num: Optional[str] = None
     born_date: Optional[str] = None
 
+class PromoUpdate(BaseModel):
+    promoId: Optional[str] = None
+    name: Optional[str] = None
+    discount: Optional[int] = None
 
 
 # Объединяем модели запроса
@@ -32,5 +36,11 @@ class BookingCreateRequest(BaseModel):
     phone: int
     room: int
     day_price: int
+    bornDate: str
+    mail: str
+    passNum: str
+    paymentType: str
+    services: List[Dict[str, Any]]
+    countedPrice: int
 
 

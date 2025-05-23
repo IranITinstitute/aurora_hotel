@@ -8,17 +8,18 @@
         <a href="/">
             <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="header_logo" draggable="false">
         </a>
-        
-        <img src="{{ url_for('static', path='svg/header_burger.svg') }}" class="header_burger">
     </div>
 </div>
 {% endblock %}
 {% block content %}
 <div class="overlay"></div>
     <div class="booking-popup">
-        <button class="close-btn">&times;</button>
-        <h2>Бронирование номера</h2>
-        <form class="booking-form">
+        <div class="booking__modal__top">
+            <h2>Бронирование номера</h2>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="booking__modal__mid">
+            <form class="booking-form">
             <div class="form-group">
                 <label for="name">Ваше имя:</label>
                 <input type="text" id="name" required autocomplete="off">
@@ -30,8 +31,54 @@
                        pattern="\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}"
                        autocomplete="off">
             </div>
+            <div class="form-group">
+                <label for="email">Почта:</label>
+                <input type="text" id="email" required autocomplete="off" placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label for="borndate">Дата рождения:</label>
+                <input type="date" id="borndate" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="passport">Паспорт:</label>
+                <input type="text" id="passport" required autocomplete="off" placeholder="11 11 111111" maxlength="12">
+            </div>
+            <div class="service-container">
+                <label for="serviceSelect">Доп. услуги:</label>
+                <select id="serviceSelect">
+                    <option value="" disabled selected>Выберите услугу...</option>
+                    <!-- Опции будут добавлены через JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+               <label for="payment_type">Способ оплаты:</label>
+                <select id="payment_type">
+                    <option value="" disabled selected>Выберите способ оплаты...</option>
+                    <option value="СБП">СБП</option>
+                    <option value="Банковская карта">Банковская карта</option>
+                    <option value="Наличные">Наличные</option>
+                    <!-- Опции будут добавлены через JavaScript -->
+                </select>
+            </div>
             <button type="submit" class="submit-btn">Подтвердить бронь</button>
-        </form>
+            </form>
+            <div class="booking__modal__mid__right">
+                <div class="promo-form">
+                    <div class="form-group">
+                        <label for="promo">Промокод:</label>
+                        <input type="search" id="promo" required autocomplete="off" placeholder="Z00YH" maxlength="5">
+                    </div>
+                    <button onclick="promoCheck()" class="submit-btn">Проверить промокод</button>
+                </div>
+                <div class="confirm__booking">
+                    <h5>Доп услуги:</h5>
+                    <div class="selected-services" id="selectedServices"></div>
+                </div>
+                <div class="summ">
+                    <h1>Итого: </h1><h1 style="margin-top: auto;" id="allSummBooking"></h1><h1>₽</h1>
+                </div>
+            </div>
+        </div>
     </div>
     <!--<input id="datepicker"/>-->
     <div class="back__room__page"></div>
@@ -70,7 +117,7 @@
                     <div class="card__data">
                         <h4>Тип: {{ available_rooms[0][i]["room_type"] }}</h4>
                         <h4>Стоимость за ночь: {{ available_rooms[0][i]["price"] }}</h4>
-                        <button class="book-btn" onclick="openPopup({{ available_rooms[0][i]["ID"] }})">Забронировать</button>
+                        <button class="book-btn" onclick="openPopup({{ available_rooms[0][i]["ID"] }}, '{{ available_rooms[0][i]["price"] }}')">Забронировать</button>
                     </div>
                     <div class="card__descr">
                         <h5>{{ available_rooms[0][i]["descr"] }}</h5>

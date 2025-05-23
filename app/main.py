@@ -5,7 +5,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.database.dao import get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
+from app.database.dao import check_promo, edit_promo, add_promo, delete_promo, get_promos, get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
 import app.database.schemas as ps
 from passlib.context import CryptContext
 import secrets
@@ -58,7 +58,7 @@ async def perform_login(request: Request):
         key=SESSION_COOKIE_NAME,
         value=session_token,
         httponly=True,
-        max_age=3600
+        max_age=852369
     )
     return response
 
@@ -110,7 +110,13 @@ async def route_add_booking(booking_data: ps.BookingCreateRequest):
         out_date = booking_data.out_date,
         phone = booking_data.phone,
         room = booking_data.room,
-        day_price = booking_data.day_price
+        day_price = booking_data.day_price,
+        bornDate = booking_data.bornDate,
+        mail = booking_data.mail,
+        passNum = booking_data.passNum,
+        paymentType = booking_data.paymentType,
+        services = booking_data.services,
+        countedPrice = booking_data.countedPrice
         )
 
 
@@ -124,6 +130,7 @@ async def route_booking_cancel(booking_id: int):
 async def route_get_client(request: Request):
 	return get_clients()
 
+
 @app.post("/api/deleteClient")
 async def route_delete_client(user_id: int):
 	return delete_client(user_id)
@@ -135,6 +142,31 @@ async def route_addClient(request: Request):
 @app.post("/api/editClient")
 async def route_editClient(client_data: ps.ClientUpdate):
 	return edit_client(client_data)
+
+
+
+
+
+
+@app.post("/api/deletePromo")
+async def route_delete_client(promo_id: int):
+	return delete_promo(promo_id)
+
+@app.post("/api/addPromo")
+async def route_addPromo(request: Request):
+	return add_promo()
+
+@app.post("/api/editPromo")
+async def route_editPromo(promo_data: ps.PromoUpdate):
+	return edit_promo(promo_data)
+
+@app.post("/api/checkPromo")
+async def route_check_client(promo_name: str):
+	return check_promo(promo_name)
+
+
+
+
 
 
 @app.get("/api/check_room_availability")
@@ -159,6 +191,11 @@ async def clients_page(request: Request, auth: bool = Depends(get_current_user))
 		request=request, name="admin_clients.html", context={"clients": get_clients()}
 	)
 
+@app.get("/admin/promo", response_class=HTMLResponse)
+async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
+	return templates.TemplateResponse(
+		request=request, name="admin_promo.html", context={"promos": get_promos()}
+	)
 
 @app.get("/admin/bookings", response_class=HTMLResponse)
 async def clients_page(request: Request, auth: bool = Depends(get_current_user)):

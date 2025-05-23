@@ -1,6 +1,6 @@
 from sqlalchemy import or_, desc, func, and_
 from sqlalchemy.sql import column
-from .models import engine, Client, Booking, Room, Employee
+from .models import engine, Client, Booking, Room, Employee, LoyaltyProgram
 from .schemas import ClientBase
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -38,7 +38,16 @@ def get_rooms_with_bookings():
 
 
 
+def get_promos():
+    with Session(autoflush=False, bind=engine) as db:
+        return_list = []
+        promos = db.query(LoyaltyProgram).order_by(LoyaltyProgram.id).all()
+        
+        for promo in promos:
+            
+            return_list.append(promo.to_dict())
 
+        return return_list
 
 
 def get_rooms():
@@ -96,7 +105,7 @@ def check_room_availability(room_id, start_date, end_date):
         return {"room_id": room_id, "available": True}  # Номер свободен
 
 
-def add_booking(in_date, name, out_date, phone, room, day_price):
+def add_booking(in_date, name, out_date, phone, room, day_price, bornDate, mail, passNum, paymentType, services, countedPrice):
     with Session(autoflush=False, bind=engine) as db:
         # Преобразуем строки в datetime
         try:
@@ -130,7 +139,7 @@ def add_booking(in_date, name, out_date, phone, room, day_price):
         if not client:
             # Если клиент не найден, создаем нового
             try:
-                new_client = Client(phone=phone, full_name=name)
+                new_client = Client(phone=phone, full_name=name, email=mail, pass_num=passNum, born_date=datetime.strptime(bornDate, "%d.%m.%Y").date())
                 db.add(new_client)
                 db.commit()  # Фиксируем транзакцию
                 client = new_client  # Используем созданный объект
@@ -149,7 +158,7 @@ def add_booking(in_date, name, out_date, phone, room, day_price):
             room_id=room,
             in_date=in_date,
             out_date=out_date,
-            price=(abs((check_out_date - check_in_date).days) * day_price),
+            price=countedPrice,
             status="booked"
         )
         db.add(new_booking)
@@ -187,14 +196,6 @@ def delete_client(user_id):
         db.delete(client)
         db.commit()
 
-def get_employee_by_email(email: str):
-    with Session(autoflush=False, bind=engine) as db:
-        employee = db.query(Employee)\
-            .filter(Employee.email == email)\
-            .first()
-        return employee
-        
-
 def edit_client(client_dict):
     with Session(autoflush=False, bind=engine) as db:
         edit_data = client_dict.model_dump(exclude_none=True)
@@ -220,11 +221,6 @@ def edit_client(client_dict):
                 client.born_date = edit_data[list(edit_data.keys())[0]]
                 db.commit()
 
-
-        
-       
-
-
 def get_clients():
     with Session(autoflush=False, bind=engine) as db:
         return_list = []
@@ -233,3 +229,54 @@ def get_clients():
             return_list.append(client.to_dict())
 
         return return_list
+
+
+
+def add_promo():
+    with Session(autoflush=False, bind=engine) as db:
+        promo = LoyaltyProgram(name="Z00YH", discount=0)
+        db.add(promo)
+        db.commit()
+        return {"promoId": True}
+
+
+def delete_promo(promo_id):
+    with Session(autoflush=False, bind=engine) as db:
+        promo = db.query(LoyaltyProgram).filter(LoyaltyProgram.id == promo_id).first()
+        db.delete(promo)
+        db.commit()
+
+
+def edit_promo(promo_dict):
+    with Session(autoflush=False, bind=engine) as db:
+        edit_data = promo_dict.model_dump(exclude_none=True)
+        print(edit_data)
+        promo = db.query(LoyaltyProgram).filter(LoyaltyProgram.id == edit_data["promoId"]).first()
+        print(promo.id)
+        match list(edit_data.keys())[1]:
+            case "name":
+                promo.name = edit_data[list(edit_data.keys())[1]]
+                db.commit()
+
+            case "discount":
+                promo.discount = edit_data[list(edit_data.keys())[1]]
+                db.commit()
+
+def check_promo(promo_name):
+    with Session(autoflush=False, bind=engine) as db:
+        try:
+            promo = db.query(LoyaltyProgram).filter(LoyaltyProgram.name == promo_name).first()
+            return {"discount": promo.discount}
+        except:
+            return {"discount": "NotFound"}
+        
+
+
+def get_employee_by_email(email: str):
+    with Session(autoflush=False, bind=engine) as db:
+        employee = db.query(Employee)\
+            .filter(Employee.email == email)\
+            .first()
+        return employee
+        
+

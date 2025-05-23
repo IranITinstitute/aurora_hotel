@@ -17,9 +17,7 @@
         <div class="header__index__content">
             <div class="header__index__left">
                 <h2>+7 (495) 524-12-97</h2>
-                <button>Забронировать номер</button>
             </div>
-            <img src="{{ url_for('static', path='svg/header_burger.svg') }}" class="header_burger">
         </div>
         
     </div>
@@ -108,6 +106,36 @@
                     <h5>Мы располагаемся в самом центре города и до нас удобно добираться</h5>
                 </div>
             </div>
+        </div>
+        <div class="map__block">
+             <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A10e0d660e2ff56cefc54afaadffab2cb021be8d8b6118db6175f855f0126739e&amp;source=constructor" 
+                width="100%" 
+                height="360" 
+                frameborder="0">
+            </iframe>
+            <div class="map__block__info__block">
+                <div class="map__block__info">
+                    <div class="footer__content__left">
+                        <div class="footer__content__left__text">
+                            <h2>Контакты</h2>
+                            <h5>г. Балашиха, ул. Разина, д. 2к1</h5>
+                            <h5>info@aurora-sgk.ru</h5>
+                            <h5>+7 (495) 524-12-97</h5>
+                        </div>
+                        <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="footer_logo" draggable="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+{% endblock %}
+{% block footer %}
+    <div class="footer" style="
+    height: 250px;
+">
+        <div class="footer__content" style="height: 250px;align-items: center;justify-content: center;">
+            <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="footer_logo" draggable="false">
         </div>
     </div>
 {% endblock %}

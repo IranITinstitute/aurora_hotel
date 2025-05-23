@@ -91,7 +91,7 @@ class LoyaltyProgram(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
+            "id": self.id,
             "name": self.name,
             "discount": self.discount
         }

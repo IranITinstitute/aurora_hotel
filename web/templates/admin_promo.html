@@ -1,0 +1,33 @@
+{% extends "admin_index.html" %}
+
+{% block sub_content %}
+<div class="sub_content">
+    <div class="content_top">
+        <h1>Программа лояльности</h1>
+        <button onclick="addPromo()">Добавить промокод</button>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Промокод</th>
+                    <th>Скидка%</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(promos | length) %}
+                <tr class="clients_table_field" data-id="{{ promos[i].id }}">
+                    <td><p>{{ promos[i].id }}</p></td>
+                    <td><p contenteditable="true" id="name">{{ promos[i].name }}</p></td>
+                    <td><p contenteditable="true" id="discount">{{ promos[i].discount }}</p></td>
+                    <td><button onclick="delete_promo({{ promos[i].id }})">Удалить промокод</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+{% endblock %}
