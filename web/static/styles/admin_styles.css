@@ -1,0 +1,142 @@
+button:hover, input:focus {
+    -webkit-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    -moz-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+}
+
+.wrapper {
+    background: none;
+}
+
+
+.header {
+    width: 100%;
+    height: 60px;
+    background-color: #1A1125;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+}
+
+.header_content {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_nav {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.header_nav a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+
+.header_user {
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5%;
+}
+
+#username {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+#role {
+    font-size: 0.8125em;
+    font-weight: 100;
+}
+
+.header_burger {
+    cursor: pointer;
+}
+
+
+h1 {
+    color: #1A1125;
+    font-size: 2.5em;
+    user-select: none;
+}
+
+.content_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub_content button, .search_top  {
+    background: none;
+    cursor: pointer;
+    border: 1px solid #1A1125;
+    font-weight: 600;
+    font-size: 1em;
+    border-radius: 3px;
+    width: 189px;
+    height: 34px;
+}
+
+.search_top {
+    font-size: 0.8em;
+    padding-left: 35px;
+    font-weight: 100;
+}
+
+.search_top_box {
+    margin-left: auto;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.search_top_ico {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    left: 30px;
+}
+
+.search_top::-webkit-search-cancel-button{
+    position:relative;
+    right:5px;   
+    margin-left: 10px; 
+}
+
+.clients_table {
+    width: 100%;
+    user-select: none;
+}
+
+.clients_table th {
+    text-align: start;
+    background-color: #F8F8F8;
+    font-weight: 600;
+}
+
+.clients_table tr {
+    height: 46px;
+}
+
+
+.clients_table_field:hover {
+    -webkit-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    -moz-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+}
+
+.clients_table td {
+    font-size: 0.75em;
+}
+
+.clients_table_field td:focus {
+    -webkit-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    -moz-box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+    box-shadow: 0px 0px 11px 1px rgba(107, 26, 206, 0.2);
+}

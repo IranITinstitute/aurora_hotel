@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+{% endblock %}
+
+{% block header %}
+<div class="header">
+    <div class="header_content">
+        <a href="/admin">
+            <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="header_logo" draggable="false">
+        </a>
+        <div class="header_nav">
+            <a href="/admin/bookings">Бронирования</a>
+            <a href="/admin/clients">Клиенты</a>
+        </div>
+        <div class="header_user">
+            <span id="username">Никита Семичев</span>
+            <span id="role">Менеджер</span>
+        </div>
+        <a href="/logout"><button>Выход</button></a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+
+{% block sub_content %}
+
+{% endblock %}
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

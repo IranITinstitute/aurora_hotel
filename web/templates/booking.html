@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+{% endblock %}
+{% block header %}
+<div class="header">
+    <div class="header_content">
+        <a href="/">
+            <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="header_logo" draggable="false">
+        </a>
+        
+        <img src="{{ url_for('static', path='svg/header_burger.svg') }}" class="header_burger">
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="overlay"></div>
+    <div class="booking-popup">
+        <button class="close-btn">&times;</button>
+        <h2>Бронирование номера</h2>
+        <form class="booking-form">
+            <div class="form-group">
+                <label for="name">Ваше имя:</label>
+                <input type="text" id="name" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" required 
+                       placeholder="+7 (___) ___-__-__"
+                       pattern="\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}"
+                       autocomplete="off">
+            </div>
+            <button type="submit" class="submit-btn">Подтвердить бронь</button>
+        </form>
+    </div>
+    <!--<input id="datepicker"/>-->
+    <div class="back__room__page"></div>
+    <div class="block__top rooms__page">
+        <div class="rooms__top__content" style="margin-bottom: 200px;">
+            <h1>Бронирование</h1>
+            <div class="block__top__datepick">
+                <div class="datepicker-container">
+                    <div class="date-input">
+                        <!--<label for="start-date">Заезд</label>-->
+                        <input type="text" id="start-date" class="flatpickr-input" placeholder="Выберите дату">
+                    </div>
+                    <div class="date-input">
+                        <!--<label for="end-date">Выезд</label>-->
+                        <input type="text" id="end-date" class="flatpickr-input" placeholder="Выберите дату">
+                    </div>
+                </div>
+                <button class="book-btn" id="check_booking">Забронировать</button>
+            </div>
+        </div>
+    </div>
+    <div class="block__roomlist__page" data-rooms="{{ available_rooms[1] }}">
+        <div class="block__roomlist__page__content">
+            {% for i in range(0, available_rooms[0] | length) %}
+                <div class="roomlist__card">
+                    <div class="card__img">
+                        <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+                    </div>
+                    <div class="card__main__data">
+                        <h3>{{ available_rooms[0][i]["room_name"] }}</h3>
+                        <div class="card__room__info__icons">
+                            <h5>{{ available_rooms[0][i]["square"] }}м</h5>
+                            <h5>до {{ available_rooms[0][i]["capacity"] }} мест</h5>
+                        </div>
+                    </div>
+                    <div class="card__data">
+                        <h4>Тип: {{ available_rooms[0][i]["room_type"] }}</h4>
+                        <h4>Стоимость за ночь: {{ available_rooms[0][i]["price"] }}</h4>
+                        <button class="book-btn" onclick="openPopup({{ available_rooms[0][i]["ID"] }})">Забронировать</button>
+                    </div>
+                    <div class="card__descr">
+                        <h5>{{ available_rooms[0][i]["descr"] }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+          
+        </div>
+    </div>
+    <script src="{{ url_for('static', path='scripts/index.js') }}"></script>
+{% endblock %}

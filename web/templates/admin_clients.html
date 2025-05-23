@@ -1,0 +1,41 @@
+{% extends "admin_index.html" %}
+
+{% block sub_content %}
+<div class="sub_content">
+    <div class="content_top">
+        <h1>Клиенты</h1>
+        <button onclick="addUser()">Добавить клиента</button>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Номер телефона</th>
+                    <th>Email</th>
+                    <th>Номер паспорта</th>
+                    <th>Дата рождения</th>
+                    <th>Дата регистрации</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(clients | length) %}
+                <tr class="clients_table_field" data-id="{{ clients[i].id }}">
+                    <td><p>{{ clients[i].id }}</p></td>
+                    <td><p contenteditable="true" id="full_name">{{ clients[i].full_name }}</p></td>
+                    <td><p contenteditable="true" id="phone">{{ clients[i].phone }}</p></td>
+                    <td><p contenteditable="true" id="email">{{ clients[i].email }}</p></td>
+                    <td><p contenteditable="true" id="pass_num">{{ clients[i].pass_num }}</p></td>
+                    <td><p contenteditable="true" id="born_date">{{ clients[i].born_date }}</p></td>
+                    <td><p>{{ clients[i].reg_date }}</p></td>
+                    <td><button onclick="delete_user({{ clients[i].id }})">Удалить клиента</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+{% endblock %}

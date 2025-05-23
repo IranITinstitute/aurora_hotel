@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block head %}
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', path='../static/scripts/index.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+    
+{% endblock %}
+
+{% block header %}
+<div class="header header__index">
+    <div class="header_content">
+        <a href="/">
+            <img src="{{ url_for('static', path='img/aurora_logo_2x.png') }}" class="header_logo" draggable="false">
+        </a>
+        <div class="header__index__content">
+            <div class="header__index__left">
+                <h2>+7 (495) 524-12-97</h2>
+                <button>Забронировать номер</button>
+            </div>
+            <img src="{{ url_for('static', path='svg/header_burger.svg') }}" class="header_burger">
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <!--<input id="datepicker"/>-->
+    <div class="block__top">
+        <div class="block__top__content">
+            <div class="block__top__content__text" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Гостиничный<br> комплекс</h1>
+                <a href="rooms" data-aos="fade-up" data-aos-duration="3000">
+                    <button>Описание номеров</button>
+                </a>
+            
+            </div>
+            <div class="block__top__datepick" data-aos="fade-up" data-aos-duration="1000">
+                <div class="datepicker-container">
+                    <div class="date-input">
+                        <!--<label for="start-date">Заезд</label>-->
+                        <input type="text" id="start-date" class="flatpickr-input" placeholder="Выберите дату">
+                    </div>
+                    <div class="date-input">
+                        <!--<label for="end-date">Выезд</label>-->
+                        <input type="text" id="end-date" class="flatpickr-input" placeholder="Выберите дату">
+                    </div>
+                </div>
+                <button class="book-btn" id="check_booking">Забронировать</button>
+            </div>
+        </div>
+    </div>
+    <div class="block__mid">
+        <div class="block__mid__content">
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/24h_svg.svg') }}">
+                </div>
+                <div class="block__mid__card__text">
+                    <h2>Круглосуточный режим работы</h2>
+                    <h5>Рады вас видеть в любое время</h5>
+                </div>
+            </div>
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/coffee_svg.svg') }}">
+                </div>
+                <div class="block__mid__card__text">
+                    <h2>В шаговой доступности</h2>
+                    <h5>Различные рестораны и кафе.ilПатио, Вкусно и точка, Сши вок, гипермаркет, Глобус и другие.</h5>
+                </div>
+            </div>
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/wifi_svg.svg') }}">
+                </div>
+                <div class="block__mid__card__text">
+                    <h2>Бесплатный Wi-Fi</h2>
+                    <h5>Бесплатный скоростной интернет доступен на всей территории</h5>
+                </div>
+            </div>
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/tree_svg.svg') }}">
+                </div>
+                <div class="block__mid__card__text">
+                    <h2>Интересные достопримечательности</h2>
+                    <h5>В непосредственной близости от нас располагаются парки и усадьбы, где можно с удовольствием прогуляться</h5>
+                </div>
+            </div>
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/parking_svg.svg') }}">
+                </div>
+                <div class="block__mid__card__text">
+                    <h2>Бесплатная парковка</h2>
+                    <h5>Для гостей доступна бесплатная парковка на территории</h5>
+                </div>
+            </div>
+            <div class="block__mid__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="block__mid__card__img">
+                    <img src="{{ url_for('static', path='svg/map_svg.svg') }}">
+                </div>    
+                <div class="block__mid__card__text">
+                    <h2>Удобное месторасположение</h2>
+                    <h5>Мы располагаемся в самом центре города и до нас удобно добираться</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

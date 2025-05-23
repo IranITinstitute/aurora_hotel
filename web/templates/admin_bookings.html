@@ -1,0 +1,46 @@
+{% extends "admin_index.html" %}
+
+{% block sub_content %}
+<div class="sub_content">
+    <div class="content_top">
+        <h1>Номера</h1>
+
+    </div>
+    <div class="block__roomlist__page__content" style="width: 100%;" data-bookings="{{ rooms[1] }}">
+        {% for i in range(0, rooms[0] | length) %}
+            <div class="roomlist__card">
+                <div class="card__img">
+                    <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+                </div>
+                <div class="card__main__data">
+                    <h3>{{ rooms[0][i]["room"]["room_name"] }}</h3>
+                    <div class="card__main__data__bottom">
+                        <div class="card__room__info__icons">
+                            <h5>{{ rooms[0][i]["room"]["square"] }}м</h5>
+                            <h5>до {{ rooms[0][i]["room"]["capacity"] }} мест</h5>
+                        </div>
+                        <button onclick="booking_cancel({{ rooms[0][i]["booking"]["ID"] }})">Отменить бронирование</button>
+                    </div>
+                </div>
+                <div class="card__data">
+                    <h4>Статус: {{ rooms[0][i]["room"]["status"] }}</h4>
+                    <h4>Тип: {{ rooms[0][i]["room"]["room_type"] }}</h4>
+                    <h4>Стоимость за ночь: {{ rooms[0][i]["room"]["price"] }}</h4>
+                    <h4>Номер комнаты: {{ rooms[0][i]["room"]["room_num"] }}</h4>
+                </div>
+                <div class="card__data" style="
+                margin-right: auto;
+                margin-left: 100px;">
+                    <h4>Клиент: {{ rooms[0][i]["client"]["full_name"] }} (+{{ rooms[0][i]["client"]["phone"] }})</h4>
+                    <h4>Бронь: {{ rooms[0][i]["booking"]["in_date"] }} | {{ rooms[0][i]["booking"]["out_date"] }} ({{ rooms[0][i]["booking"]["days"] }})</h4>
+                    <h4>Сумма: {{ rooms[0][i]["booking"]["price"] }} ₽</h4>
+                </div>
+                
+                
+            </div>
+        {% endfor %}
+        
+    </div>
+    <script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+</div>
+{% endblock %}

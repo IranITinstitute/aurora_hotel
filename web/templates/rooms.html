@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+{% endblock %}
+{% block header %}
+<div class="header">
+    <div class="header_content">
+        <a href="/">
+            <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="header_logo" draggable="false">
+        </a>
+        
+        <img src="{{ url_for('static', path='svg/header_burger.svg') }}" class="header_burger">
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <!--<input id="datepicker"/>-->
+    <div class="back__room__page"></div>
+    <div class="block__top rooms__page">
+        <div class="rooms__top__content">
+            <h1>Наши номера</h1>
+            <svg width="43" height="13" viewBox="0 0 43 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 50px;">
+                <path d="M2 3L8.5 10.5L15 3L21.5 10.5L28 3L34.5 10.5L41 3" stroke="black" stroke-width="3"/>
+                </svg>
+        </div>
+    </div>
+    <div class="block__roomlist__page">
+        <div class="block__roomlist__page__content">
+            <div class="roomlist__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="card__img">
+                    <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+                </div>
+                <div class="card__main__data">
+                    <h3>Стандарт с одной большой кроватью</h3>
+                    <div class="card__room__info__icons">
+                        <h5>18м</h5>
+                        <h5>до 3 мест</h5>
+                    </div>
+                </div>
+                <div class="card__data">
+                    <h4>Тип: Люкс</h4>
+                    <h4>Стоимость за ночь: 5500</h4>
+                </div>
+                <div class="card__descr">
+                    <h5>Стандартный двухместный номер с двумя отдельными кроватями. Для вашего удобства в номере 
+                        собственная ванная комната с душевой кабиной и туалетом. Гостям предоставляются все необходимые 
+                        туалетные принадлежности. Имеется холодильник, кондиционер и телевизор. Для гостей предоставляется 
+                        бесплатная парковка.</h5>
+                </div>
+            </div>
+            <div class="roomlist__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="card__img">
+                    <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+                </div>
+                <div class="card__main__data">
+                    <h3>Стандарт с одной большой кроватью</h3>
+                    <div class="card__room__info__icons">
+                        <h5>18м</h5>
+                        <h5>до 3 мест</h5>
+                    </div>
+                </div>
+                <div class="card__data">
+                    <h4>Тип: Люкс</h4>
+                    <h4>Стоимость за ночь: 5500</h4>
+                </div>
+                <div class="card__descr">
+                    <h5>Стандартный двухместный номер с двумя отдельными кроватями. Для вашего удобства в номере 
+                        собственная ванная комната с душевой кабиной и туалетом. Гостям предоставляются все необходимые 
+                        туалетные принадлежности. Имеется холодильник, кондиционер и телевизор. Для гостей предоставляется 
+                        бесплатная парковка.</h5>
+                </div>
+            </div>
+            <div class="roomlist__card" data-aos="fade-up" data-aos-duration="1000">
+                <div class="card__img">
+                    <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+                </div>
+                <div class="card__main__data">
+                    <h3>Стандарт с одной большой кроватью</h3>
+                    <div class="card__room__info__icons">
+                        <h5>18м</h5>
+                        <h5>до 3 мест</h5>
+                    </div>
+                </div>
+                <div class="card__data">
+                    <h4>Тип: Люкс</h4>
+                    <h4>Стоимость за ночь: 5500</h4>
+                </div>
+                <div class="card__descr">
+                    <h5>Стандартный двухместный номер с двумя отдельными кроватями. Для вашего удобства в номере 
+                        собственная ванная комната с душевой кабиной и туалетом. Гостям предоставляются все необходимые 
+                        туалетные принадлежности. Имеется холодильник, кондиционер и телевизор. Для гостей предоставляется 
+                        бесплатная парковка.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
