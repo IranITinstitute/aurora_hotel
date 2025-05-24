@@ -1,46 +1,69 @@
 {% extends "admin_index.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/booking.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/clients.css') }}">
+{% endblock %}
+
 {% block sub_content %}
 <div class="sub_content">
     <div class="content_top">
         <h1>Номера</h1>
 
     </div>
-    <div class="block__roomlist__page__content" style="width: 100%;" data-bookings="{{ rooms[1] }}">
-        {% for i in range(0, rooms[0] | length) %}
-            <div class="roomlist__card">
-                <div class="card__img">
-                    <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false">
+    <div class="blockroomlistpagecontent" style="width: 100%;" data-bookings="{{ rooms[1] }}">
+    {% for i in range(0, rooms[0] | length) %}
+    <div class="roomlistcard">
+        <!-- Изображение комнаты -->
+        <div class="cardimg">
+            <img src="{{ url_for('static', path='img/room_1.png') }}" draggable="false" alt="Room {{ rooms[0][i]['room']['room_num'] }}">
+        </div>
+
+        <!-- Основная информация о комнате -->
+        <div class="cardmaindata">
+            <h3>{{ rooms[0][i]["room"]["room_name"] }}</h3>
+            <div class="cardmaindatabottom">
+                <div class="cardroominfoicons">
+                    <h5>{{ rooms[0][i]["room"]["square"] }}м²</h5>
+                    <h5>до {{ rooms[0][i]["room"]["capacity"] }} мест</h5>
                 </div>
-                <div class="card__main__data">
-                    <h3>{{ rooms[0][i]["room"]["room_name"] }}</h3>
-                    <div class="card__main__data__bottom">
-                        <div class="card__room__info__icons">
-                            <h5>{{ rooms[0][i]["room"]["square"] }}м</h5>
-                            <h5>до {{ rooms[0][i]["room"]["capacity"] }} мест</h5>
-                        </div>
-                        <button style="font-size: 0.8em;" onclick="booking_cancel({{ rooms[0][i]["booking"]["ID"] }})">Отменить бронирование</button>
-                    </div>
-                </div>
-                <div class="card__data">
-                    <h4>Статус: {{ rooms[0][i]["room"]["status"] }}</h4>
-                    <h4>Тип: {{ rooms[0][i]["room"]["room_type"] }}</h4>
-                    <h4>Стоимость за ночь: {{ rooms[0][i]["room"]["price"] }}</h4>
-                    <h4>Номер комнаты: {{ rooms[0][i]["room"]["room_num"] }}</h4>
-                </div>
-                <div class="card__data" style="
-                margin-right: auto;
-                margin-left: 100px;">
-                    <h4>Клиент: {{ rooms[0][i]["client"]["full_name"] }} (+{{ rooms[0][i]["client"]["phone"] }})</h4>
-                    <h4>Бронь: {{ rooms[0][i]["booking"]["in_date"] }} | {{ rooms[0][i]["booking"]["out_date"] }} ({{ rooms[0][i]["booking"]["days"] }})</h4>
-                    <h4>Сумма: {{ rooms[0][i]["booking"]["price"] }} ₽</h4>
-                </div>
-                
-                
+                <button class="cancel-btn" onclick="booking_cancel({{ rooms[0][i]['booking']['ID'] }})">
+                    Отменить бронирование
+                </button>
             </div>
-        {% endfor %}
-        
+        </div>
+
+        <!-- Данные комнаты -->
+        <div class="carddata">
+            <h4>Статус: {{ rooms[0][i]["room"]["status"] }}</h4>
+            <h4>Тип: {{ rooms[0][i]["room"]["room_type"] }}</h4>
+            <h4>Стоимость за ночь: {{ rooms[0][i]["room"]["price"] }}₽</h4>
+            <h4>Номер комнаты: {{ rooms[0][i]["room"]["room_num"] }}</h4>
+        </div>
+
+        <!-- Данные клиента и брони -->
+        <div class="carddata">
+            <h4>Клиент: {{ rooms[0][i]["client"]["full_name"] }} (+{{ rooms[0][i]["client"]["phone"] }})</h4>
+            <h4>Бронь: {{ rooms[0][i]["booking"]["in_date"] }} | {{ rooms[0][i]["booking"]["out_date"] }} ({{ rooms[0][i]["booking"]["days"] }} дн.)</h4>
+            <h4>Сумма: {{ rooms[0][i]["booking"]["price"] }} ₽</h4>
+            
+            <select name="services" readonly>
+                <option value="" disabled selected hidden>Услуги ({{ rooms[0][i]["services"] | length }})</option>
+                {% for x in range(0, rooms[0][i]["services"] | length) %}
+                    <option value="" disabled>{{ rooms[0][i]["services"][x] }}</option>
+                {% endfor %}
+            </select>
+            <select name="payment" readonly>
+                <option value="" disabled selected hidden>Информация о платеже</option>
+                <option value="" disabled>№ {{ rooms[0][i]["payments"][0]["id"] }} | {{ rooms[0][i]["payments"][0]["price"] }}₽</option>
+                <option value="" disabled>{{ rooms[0][i]["payments"][0]["pay_type"] }}</option>
+                <option value="" disabled>{{ rooms[0][i]["payments"][0]["payment_date"] }}</option>
+            </select>
+        </div>
     </div>
+    {% endfor %}
+</div>
     <script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
 </div>
 {% endblock %}

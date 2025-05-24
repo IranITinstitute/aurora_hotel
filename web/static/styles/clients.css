@@ -1,0 +1,300 @@
+/* Основные стили страницы клиентов */
+.sub_content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    min-height: 100vh;
+}
+
+/* Верхняя секция с заголовком и кнопкой */
+.content_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: linear-gradient(135deg, #2D1D40 0%, #4a3b5c 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(45, 29, 64, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.content_top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+.content_top h1 {
+    color: #ffffff;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.content_top button {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #2D1D40;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.content_top button:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.content_top button:active {
+    transform: translateY(0);
+}
+
+/* Контейнер таблицы */
+.clients_table_box {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid rgba(45, 29, 64, 0.08);
+}
+
+/* Стили таблицы */
+.clients_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+.clients_table thead {
+    background: linear-gradient(135deg, #2D1D40 0%, #3d2a52 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.clients_table thead th {
+    background: transparent !important;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.clients_table thead th:last-child {
+    border-right: none;
+    text-align: center;
+}
+
+/* Строки таблицы */
+.clients_table_field {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(45, 29, 64, 0.08);
+    position: relative;
+}
+
+
+
+.clients_table_field:hover {
+    background: linear-gradient(135deg, rgba(45, 29, 64, 0.02) 0%, rgba(45, 29, 64, 0.05) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(45, 29, 64, 0.1);
+}
+
+.clients_table_field:hover::before {
+    width: 4px;
+}
+
+.clients_table_field:nth-child(even) {
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.clients_table_field:nth-child(even):hover {
+    background: linear-gradient(135deg, rgba(45, 29, 64, 0.03) 0%, rgba(45, 29, 64, 0.06) 100%);
+}
+
+/* Ячейки таблицы */
+.clients_table td {
+    padding: 16px 12px;
+    vertical-align: middle;
+    position: relative;
+    z-index: 1;
+}
+
+.clients_table td:first-child {
+    font-weight: 600;
+    color: #2D1D40;
+    background: rgba(45, 29, 64, 0.05);
+    border-radius: 8px 0 0 8px;
+    margin: 4px 0;
+}
+
+/* Редактируемый контент */
+.clients_table td p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    min-height: 20px;
+    color: #333;
+    font-weight: 500;
+}
+
+.clients_table td p[contenteditable="true"]:hover {
+    background: rgba(45, 29, 64, 0.08);
+    cursor: text;
+}
+
+.clients_table td p[contenteditable="true"]:focus {
+    background: rgba(45, 29, 64, 0.12);
+    outline: 2px solid rgba(45, 29, 64, 0.3);
+    outline-offset: 2px;
+}
+
+/* Специальные стили для разных колонок */
+.clients_table td:nth-child(2) p {
+    font-weight: 600;
+    color: #2D1D40;
+}
+
+.clients_table td:nth-child(3) p,
+.clients_table td:nth-child(4) p {
+    font-family: monospace;
+    background: rgba(45, 29, 64, 0.05);
+}
+
+.clients_table td:nth-child(6) p,
+.clients_table td:nth-child(7) p {
+    color: #666;
+}
+
+/* Кнопка удаления */
+.clients_table td:last-child {
+    text-align: center;
+    padding: 12px;
+}
+
+.clients_table td button {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+}
+
+.clients_table td button:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+}
+
+.clients_table td button:active {
+    transform: translateY(0);
+}
+
+/* Индикаторы для редактируемых полей */
+.clients_table td p[contenteditable="true"]::after {
+    content: '✏️';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.7em;
+}
+
+.clients_table td p[contenteditable="true"]:hover::after {
+    opacity: 0.6;
+}
+
+.clients_table td p[contenteditable="true"]:focus::after {
+    opacity: 0;
+}
+
+/* Адаптивность */
+@media screen and (max-width: 1200px) {
+    .clients_table {
+        font-size: 0.8em;
+    }
+    
+    .clients_table td {
+        padding: 12px 8px;
+    }
+    
+    .clients_table thead th {
+        padding: 12px 8px;
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .content_top {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .content_top h1 {
+        font-size: 1.8em;
+    }
+    
+    .clients_table_box {
+        overflow-x: auto;
+    }
+    
+    .clients_table {
+        min-width: 800px;
+    }
+    
+    .clients_table td p[contenteditable="true"]::after {
+        display: none;
+    }
+}
+
+/* Анимация загрузки для таблицы */
+.clients_table_field {
+    opacity: 0;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.clients_table_field:nth-child(1) { animation-delay: 0.1s; }
+.clients_table_field:nth-child(2) { animation-delay: 0.2s; }
+.clients_table_field:nth-child(3) { animation-delay: 0.3s; }
+.clients_table_field:nth-child(4) { animation-delay: 0.4s; }
+.clients_table_field:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

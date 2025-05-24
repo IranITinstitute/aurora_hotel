@@ -1,0 +1,39 @@
+{% extends "admin_index.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/clients.css') }}">
+{% endblock %}
+
+{% block sub_content %}
+<div class="sub_content">
+    <div class="content_top">
+        <h1>Жалобы</h1>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Описание</th>
+                    <th>Статус</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(complaints | length) %}
+                <tr class="clients_table_field" data-id="{{ complaints[i].id }}">
+                    <td><p>{{ complaints[i].id }}</p></td>
+                    <td><p>{{ complaints[i].client_id }}</p></td>
+                    <td><p>{{ complaints[i].description }}</p></td>
+                    <td><p>{{ complaints[i].status }}</p></td>
+                    <td><p>{{ complaints[i].complain_date }}</p></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+{% endblock %}

@@ -105,7 +105,7 @@ class Service(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
+            "id": self.id,
             "name": self.name,
             "description": self.description,
             "price": self.price
@@ -144,8 +144,8 @@ class Payment(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
-            "booking": self.booking,
+            "id": self.id,
+            "booking": self.booking_id,
             "price": self.price,
             "payment_date": self.payment_date.strftime('%m-%d-%Y %H:%M') if self.payment_date else None,
             "pay_type": self.pay_type
@@ -174,7 +174,7 @@ class Complaint(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
+            "id": self.id,
             "client_id": self.client_id,
             "description": self.description,
             "status": self.status,
@@ -192,12 +192,12 @@ class Review(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
+            "id": self.id,
             "client_id": self.client_id,
-            "room": self.room,
+            "room_id": self.room_id,
             "grade": self.grade,
             "comment": self.comment,
-            "date": self.date.strftime('%d-%m-%Y') if self.date else None
+            "created_at": self.created_at.strftime('%d-%m-%Y') if self.created_at else None
         }
 
 class RoomService(Base):
@@ -227,9 +227,9 @@ class ServiceOrder(Base):
 
     def to_dict(self):
         return {
-            "ID": self.ID,
+            "id": self.id,
             "client_id": self.client_id,
-            "service": self.service,
+            "service_id": self.service_id,
             "order_date": self.order_date.strftime('%m-%d-%Y %H:%M') if self.order_date else None,
             "price": self.price
         }

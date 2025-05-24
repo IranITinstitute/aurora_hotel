@@ -12,6 +12,30 @@
 </div>
 {% endblock %}
 {% block content %}
+<div id="complaint-modal__overlay">
+    <div class="complaint-modal__container">
+        <span class="complaint-modal__close-btn" onclick="closeComplaintModal()">&times;</span>
+        <h2 class="complaint-modal__title">Подача жалобы</h2>
+        <form method="post" action="/complaint" id="complaint-modal__form">
+            <div class="complaint-modal__input-group">
+                <label class="complaint-modal__label" for="complaint-username">Ваше имя</label>
+                <input type="text" 
+                       class="complaint-modal__input" 
+                       id="complaint-username" 
+                       name="complaint-username" 
+                       required>
+            </div>
+            <div class="complaint-modal__input-group">
+                <label class="complaint-modal__label" for="complaint-description">Описание проблемы</label>
+                <textarea class="complaint-modal__input complaint-modal__textarea" 
+                          id="complaint-description" 
+                          name="complaint-description" 
+                          required></textarea>
+            </div>
+            <button type="submit" class="complaint-modal__submit">Отправить жалобу</button>
+        </form>
+    </div>
+</div>
     <!--<input id="datepicker"/>-->
     <div class="back__room__page"></div>
     <div class="block__top rooms__page">
@@ -90,6 +114,38 @@
                         бесплатная парковка.</h5>
                 </div>
             </div>
+        </div>
+    </div>
+        <div class="map__block">
+             <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A10e0d660e2ff56cefc54afaadffab2cb021be8d8b6118db6175f855f0126739e&amp;source=constructor" 
+                width="100%" 
+                height="360" 
+                frameborder="0">
+            </iframe>
+            <div class="map__block__info__block">
+                <div class="map__block__info">
+                    <div class="footer__content__left">
+                        <div class="footer__content__left__text">
+                            <h2>Контакты</h2>
+                            <h5>г. Балашиха, ул. Разина, д. 2к1</h5>
+                            <h5>info@aurora-sgk.ru</h5>
+                            <h5>+7 (495) 524-12-97</h5>
+                            <a onclick="openComplaintModal()">Оставить жалобу</a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+{% endblock %}
+{% block footer %}
+    <div class="footer" style="
+    height: 250px;
+">
+        <div class="footer__content" style="height: 250px;align-items: center;justify-content: center;">
+            <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="footer_logo" draggable="false">
         </div>
     </div>
 {% endblock %}

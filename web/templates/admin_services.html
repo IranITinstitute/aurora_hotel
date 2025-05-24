@@ -1,0 +1,73 @@
+{% extends "admin_index.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/clients.css') }}">
+{% endblock %}
+
+{% block sub_content %}
+<div class="sub_content" style="
+    margin-bottom: 150px;
+">
+    <div class="content_top">
+        <h1>Услуги</h1>
+        <button onclick="addService()">Добавить услугу</button>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название услуги</th>
+                    <th>Описание</th>
+                    <th>Стоимость</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(services | length) %}
+                <tr class="clients_table_field" data-id="{{ services[i].id }}">
+                    <td><p>{{ services[i].id }}</p></td>
+                    <td><p contenteditable="true" id="name">{{ services[i].name }}</p></td>
+                    <td><p contenteditable="true" id="description">{{ services[i].description }}</p></td>
+                    <td><p contenteditable="true" id="price">{{ services[i].price }}</p></td>
+                    <td><button onclick="delete_service({{ services[i].id }})">Удалить услугу</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="content_top" style="
+    margin-top: 150px;
+">
+        <h1>Заказанные услуги</h1>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Номер комнаты</th>
+                    <th>Услуга</th>
+                    <th>Дата</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(serviceOrders | length) %}
+                <tr class="clients_table_field" data-id="{{ serviceOrders[i].id }}">
+                    <td><p>{{ serviceOrders[i].id }}</p></td>
+                    <td><p id="client">{{ serviceOrders[i].client_name }}</p></td>
+                    <td><p id="client">{{ serviceOrders[i].room_number }}</p></td>
+                    <td><p id="service">{{ serviceOrders[i].service_name }}</p></td>
+                    <td><p id="date">{{ serviceOrders[i].order_date }}</p></td>
+                    <td><p id="price">{{ serviceOrders[i].price }}</p></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+{% endblock %}

@@ -2,7 +2,7 @@
 {% block head %}
 
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', path='../static/scripts/index.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/reviews.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='styles/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
     
@@ -25,6 +25,30 @@
 {% endblock %}
 
 {% block content %}
+<div id="complaint-modal__overlay">
+    <div class="complaint-modal__container">
+        <span class="complaint-modal__close-btn" onclick="closeComplaintModal()">&times;</span>
+        <h2 class="complaint-modal__title">Подача жалобы</h2>
+        <form method="post" action="/complaint" id="complaint-modal__form">
+            <div class="complaint-modal__input-group">
+                <label class="complaint-modal__label" for="complaint-username">Ваше имя</label>
+                <input type="text" 
+                       class="complaint-modal__input" 
+                       id="complaint-username" 
+                       name="complaint-username" 
+                       required>
+            </div>
+            <div class="complaint-modal__input-group">
+                <label class="complaint-modal__label" for="complaint-description">Описание проблемы</label>
+                <textarea class="complaint-modal__input complaint-modal__textarea" 
+                          id="complaint-description" 
+                          name="complaint-description" 
+                          required></textarea>
+            </div>
+            <button type="submit" class="complaint-modal__submit">Отправить жалобу</button>
+        </form>
+    </div>
+</div>
     <!--<input id="datepicker"/>-->
     <div class="block__top">
         <div class="block__top__content">
@@ -107,6 +131,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="reviews__block" data-aos="fade-up" data-aos-duration="1000">
+            <h1>Отзывы</h1>
+            <div class="reviews__content" style="
+    flex-direction: row;
+">
+                {% for i in range(reviews | length) %}
+                    <div class="review__card">
+                        <h4>{{ reviews[i]["created_at"] }}</h4>
+                        <div class="rating_review">
+                        <div class="rating_review">
+                        {% for s in range(0, reviews[i]["grade"]) %}
+                            <span class="active">★</span>
+                        {% endfor %}
+                        {% for s in range(reviews[i]["grade"], 5) %}
+                            <span>★</span>
+                        {% endfor %}
+                    </div>
+                        </div>
+                        <h2>{{ reviews[i]["username"] }}</h2>
+                        <p>{{ reviews[i]["comment"] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="/reviews">Все отзывы ></a>
+        </div>
+
         <div class="map__block">
              <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A10e0d660e2ff56cefc54afaadffab2cb021be8d8b6118db6175f855f0126739e&amp;source=constructor" 
                 width="100%" 
@@ -121,8 +172,9 @@
                             <h5>г. Балашиха, ул. Разина, д. 2к1</h5>
                             <h5>info@aurora-sgk.ru</h5>
                             <h5>+7 (495) 524-12-97</h5>
+                            <a onclick="openComplaintModal()">Оставить жалобу</a>
                         </div>
-                        <img src="{{ url_for('static', path='img/aurora_logo.png') }}" class="footer_logo" draggable="false">
+                        
                     </div>
                 </div>
             </div>
@@ -131,6 +183,7 @@
     </div>
 {% endblock %}
 {% block footer %}
+<script src="{{ url_for('static', path='../static/scripts/index.js') }}"></script>
     <div class="footer" style="
     height: 250px;
 ">

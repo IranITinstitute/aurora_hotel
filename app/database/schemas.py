@@ -27,6 +27,11 @@ class PromoUpdate(BaseModel):
     name: Optional[str] = None
     discount: Optional[int] = None
 
+class ServiceUpdate(BaseModel):
+    serviceId: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[int] = None
 
 # Объединяем модели запроса
 class BookingCreateRequest(BaseModel):
@@ -40,7 +45,7 @@ class BookingCreateRequest(BaseModel):
     mail: str
     passNum: str
     paymentType: str
-    services: List[Dict[str, Any]]
+    services: list[int] | None = None
     countedPrice: int
 
 

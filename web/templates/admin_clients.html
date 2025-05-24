@@ -1,41 +1,95 @@
 {% extends "admin_index.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/clients.css') }}">
+{% endblock %}
+
 {% block sub_content %}
 <div class="sub_content">
     <div class="content_top">
         <h1>Клиенты</h1>
-        <button onclick="addUser()">Добавить клиента</button>
+        <button onclick="addUser()">✨ Добавить клиента</button>
     </div>
+    
     <div class="clients_table_box">
         <table class="clients_table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Имя</th>
-                    <th>Номер телефона</th>
-                    <th>Email</th>
-                    <th>Номер паспорта</th>
-                    <th>Дата рождения</th>
-                    <th>Дата регистрации</th>
-                    <th></th>
+                    <th>👤 Имя</th>
+                    <th>📱 Телефон</th>
+                    <th>📧 Email</th>
+                    <th>🆔 Паспорт</th>
+                    <th>🎂 Дата рождения</th>
+                    <th>📅 Регистрация</th>
+                    <th>⚙️ Действия</th>
                 </tr>
             </thead>
             <tbody>
                 {% for i in range(clients | length) %}
                 <tr class="clients_table_field" data-id="{{ clients[i].id }}">
-                    <td><p>{{ clients[i].id }}</p></td>
-                    <td><p contenteditable="true" id="full_name">{{ clients[i].full_name }}</p></td>
-                    <td><p contenteditable="true" id="phone">{{ clients[i].phone }}</p></td>
-                    <td><p contenteditable="true" id="email">{{ clients[i].email }}</p></td>
-                    <td><p contenteditable="true" id="pass_num">{{ clients[i].pass_num }}</p></td>
-                    <td><p contenteditable="true" id="born_date">{{ clients[i].born_date }}</p></td>
-                    <td><p>{{ clients[i].reg_date }}</p></td>
-                    <td><button onclick="delete_user({{ clients[i].id }})">Удалить клиента</button></td>
+                    <td>
+                        <p>{{ clients[i].id }}</p>
+                    </td>
+                    <td>
+                        <p contenteditable="true" 
+                           id="full_name"
+                           data-field="full_name"
+                           data-original="{{ clients[i].full_name }}">
+                            {{ clients[i].full_name }}
+                        </p>
+                    </td>
+                    <td>
+                        <p contenteditable="true" 
+                           id="phone"
+                           data-field="phone"
+                           data-original="{{ clients[i].phone }}">
+                            {{ clients[i].phone }}
+                        </p>
+                    </td>
+                    <td>
+                        <p contenteditable="true" 
+                           id="email"
+                           data-field="email"
+                           data-original="{{ clients[i].email }}">
+                            {{ clients[i].email }}
+                        </p>
+                    </td>
+                    <td>
+                        <p contenteditable="true" 
+                           id="pass_num"
+                           data-field="pass_num"
+                           data-original="{{ clients[i].pass_num }}">
+                            {{ clients[i].pass_num }}
+                        </p>
+                    </td>
+                    <td>
+                        <p contenteditable="true" 
+                           id="born_date"
+                           data-field="born_date"
+                           data-original="{{ clients[i].born_date }}">
+                            {{ clients[i].born_date }}
+                        </p>
+                    </td>
+                    <td>
+                        <p title="Дата регистрации: {{ clients[i].reg_date }}">
+                            {{ clients[i].reg_date }}
+                        </p>
+                    </td>
+                    <td>
+                        <button onclick="delete_user({{ clients[i].id }})" 
+                                title="Удалить клиента {{ clients[i].full_name }}">
+                            🗑️ Удалить
+                        </button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
 <script src="{{ url_for('static', path='scripts/admin.js') }}"></script>
+
 {% endblock %}

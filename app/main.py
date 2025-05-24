@@ -1,11 +1,11 @@
 from typing import Union
 
-from fastapi import FastAPI, Request, Depends, HTTPException, status
+from fastapi import FastAPI, Request, Depends, HTTPException, status, Form
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.database.dao import check_promo, edit_promo, add_promo, delete_promo, get_promos, get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
+from app.database.dao import get_complaints, add_complaint, add_review, get_reviews, get_service_orders, delete_service, add_service, edit_service, get_available_services, check_promo, edit_promo, add_promo, delete_promo, get_promos, get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
 import app.database.schemas as ps
 from passlib.context import CryptContext
 import secrets
@@ -81,7 +81,7 @@ async def logout(request: Request):
 @app.get("/", response_class=HTMLResponse)
 async def index_page(request: Request):
 	return templates.TemplateResponse(
-		request=request, name="index.html", context={"hello": "world"}
+		request=request, name="index.html", context={"reviews": get_reviews(2)}
 	)
 
 @app.get("/rooms", response_class=HTMLResponse)
@@ -96,6 +96,35 @@ async def booking_page(request: Request, start_date: str, end_date:str):
 	return templates.TemplateResponse(
 		request=request, name="booking.html", context={"available_rooms": get_available_rooms(start_date, end_date)}
 	)
+
+
+@app.get("/reviews", response_class=HTMLResponse)
+async def reviews_page(request: Request):
+	return templates.TemplateResponse(
+		request=request, name="reviews.html", context={"reviews": get_reviews(0)}
+	)
+
+
+
+@app.post("/reviews")
+async def route_add_review(
+        username: str = Form(...),
+        email: str = Form(...),
+        grade: int = Form(...),
+        comment: str = Form(...)
+    ):
+    add_review(username, email, grade, comment)
+
+    return RedirectResponse(url="/reviews", status_code=303)
+
+@app.post("/complaint")
+async def route_add_complaint(
+    complaint_username: str = Form(..., alias="complaint-username"),
+    complaint_description: str = Form(..., alias="complaint-description")
+    ):
+    add_complaint(complaint_username, complaint_description)
+    return RedirectResponse(url="/", status_code=303)
+
 
 
 """
@@ -149,7 +178,7 @@ async def route_editClient(client_data: ps.ClientUpdate):
 
 
 @app.post("/api/deletePromo")
-async def route_delete_client(promo_id: int):
+async def route_delete_promo(promo_id: int):
 	return delete_promo(promo_id)
 
 @app.post("/api/addPromo")
@@ -168,6 +197,26 @@ async def route_check_client(promo_name: str):
 
 
 
+@app.get("/api/getAvailableServices")
+async def route_get_available_services(request: Request):
+    return get_available_services()
+
+@app.post("/api/deleteService")
+async def route_delete_Service(service_id: int):
+	return delete_service(service_id)
+
+@app.post("/api/addService")
+async def route_addService(request: Request):
+	return add_service()
+
+@app.post("/api/editService")
+async def route_editService(service_data: ps.ServiceUpdate):
+	return edit_service(service_data)
+
+
+
+
+
 
 @app.get("/api/check_room_availability")
 async def route_check_room_availability(room_id: int, start_date: str, end_date: str):
@@ -178,11 +227,9 @@ async def route_check_room_availability(room_id: int, start_date: str, end_date:
 	ADMIN ROUTER
 """
 
-@app.get("/admin", response_class=HTMLResponse)
+@app.get("/admin")
 async def admin_index_page(request: Request, auth: bool = Depends(get_current_user)):
-	return templates.TemplateResponse(
-		request=request, name="admin_index.html", context={"hello": "world"}
-	)
+	return RedirectResponse(url="/admin/bookings", status_code=303)
 
 
 @app.get("/admin/clients", response_class=HTMLResponse)
@@ -195,6 +242,18 @@ async def clients_page(request: Request, auth: bool = Depends(get_current_user))
 async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
 	return templates.TemplateResponse(
 		request=request, name="admin_promo.html", context={"promos": get_promos()}
+	)
+
+@app.get("/admin/complaints", response_class=HTMLResponse)
+async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
+	return templates.TemplateResponse(
+		request=request, name="admin_complaints.html", context={"complaints": get_complaints()}
+	)
+
+@app.get("/admin/services", response_class=HTMLResponse)
+async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
+	return templates.TemplateResponse(
+		request=request, name="admin_services.html", context={"services": get_available_services(), "serviceOrders": get_service_orders()}
 	)
 
 @app.get("/admin/bookings", response_class=HTMLResponse)

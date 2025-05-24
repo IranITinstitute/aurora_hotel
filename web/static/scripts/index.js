@@ -1,3 +1,26 @@
+function openComplaintModal() {
+    document.getElementById('complaint-modal__overlay').style.display = 'block';
+}
+
+function closeComplaintModal() {
+    document.getElementById('complaint-modal__overlay').style.display = 'none';
+}
+
+// Закрытие по клику вне области
+document.getElementById('complaint-modal__overlay').addEventListener('click', function(e) {
+    if(e.target === this) closeComplaintModal();
+});
+
+
+
+// Закрытие по ESC
+document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape') closeComplaintModal();
+});
+
+
+
+
 function showNotification(text, options = {}) {
   // Создаем элемент уведомления
   const notification = document.createElement('div');
@@ -137,24 +160,31 @@ function promoCheck() {
 
 
 
-const services = [
-    'Дополнительный ужин - 5000p.',
-    'Мини-бар - 14000p.',
-    'Массаж - 6000p.',
-    'Спа-Процедуры - 28000p.'
-];
+let services = null;
+let services_list = null;
 
 const select = document.getElementById('serviceSelect');
 const selectedServices = document.getElementById('selectedServices');
 let selected = [];
 
-// Заполняем select опциями
-services.forEach(service => {
-    const option = document.createElement('option');
-    option.value = service;
-    option.textContent = service;
-    select.appendChild(option);
-});
+
+fetch('/api/getAvailableServices')
+  .then(response => response.json())
+  .then(data => {
+    services_list = data;
+    services = data.map(service => 
+      `${service.name} - ${service.price}p.`
+    );
+    // Заполняем select опциями
+    services.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service;
+        option.textContent = service;
+        select.appendChild(option);
+    });
+  })
+  .catch(error => console.error('Error:', error));
+
 
 
 var servicesList = null;
@@ -331,6 +361,8 @@ phoneInput.addEventListener('input', function(e) {
     e.target.value = mask;
 });
 
+var booking_price = null;
+
 // Функции для управления попапом
 function openPopup(room_num, onePrice) {
   var diffDays = 0;
@@ -357,6 +389,8 @@ function openPopup(room_num, onePrice) {
       "room_id": room_num,
       "booking_price": onePrice * diffDays
     }
+
+    booking_price = onePrice * diffDays;
 
     document.querySelector('#allSummBooking').innerHTML = onePrice * diffDays;
 
@@ -395,13 +429,30 @@ bookingForm.addEventListener('submit', (e) => {
 
     const roomData = findRoomById(rooms, roomID);
 
+    var servicesIds = null;
+
+    try {
+        servicesIds = servicesList.services.map(selected => {
+        const service = services_list.find(item => 
+            item.name === selected.name && 
+            item.price === selected.price
+        );
+            return service ? service.id : null;
+        }).filter(id => id !== null);
+    } catch {
+        countedPrice = booking_price;
+    }
+    
+
+    
+
     var bookingData = {
         room: roomID,
         name: name,
         mail: document.querySelector('#email').value,
         bornDate: document.querySelector('#borndate').value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3.$2.$1') || '',
         passNum: document.querySelector('#passport').value,
-        services: servicesList.services,
+        services: servicesIds,
         paymentType: document.querySelector('#payment_type').value,
         phone: parseInt(phone),
         in_date: startDate,
@@ -409,6 +460,7 @@ bookingForm.addEventListener('submit', (e) => {
         day_price: parseInt(roomData.price),
         countedPrice: parseInt(countedPrice)
     };
+    
     
     fetch('/api/booking', {
         method: 'POST',

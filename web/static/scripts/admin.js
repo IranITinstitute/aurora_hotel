@@ -61,6 +61,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
+        } else if (window.location.pathname.includes('/services')) {
+                    // Обрабатываем изменения при потере фокуса
+            element.addEventListener('blur', () => {
+                const newValue = element.textContent.trim();
+                
+                if (newValue !== originalValue) {
+                    const row = element.closest('tr.clients_table_field');
+                    const serviceId = row.dataset.id;
+                    const fieldName = element.id;
+                    
+                    const data = {
+                        serviceId: serviceId,
+                        [fieldName]: newValue
+                    };
+                    
+                    console.log(data);
+                    
+                    fetch('/api/editService', { 
+                        method: 'POST', 
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data) 
+                    });
+                }
+            });
+
         }
 
     });
@@ -68,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
+    
 
 
 
@@ -129,6 +156,22 @@ function addUser() {
 
 function addPromo() {
     fetch(`/api/addPromo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+    }).then(response => {
+        if (!response.ok) throw new Error('HTTP error');
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    window.location.reload();
+}
+
+function addService() {
+    fetch(`/api/addService`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
