@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', path='styles/admin_styles.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='styles/clients.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='styles/reviews.css') }}">
 {% endblock %}
 
 {% block sub_content %}
@@ -19,6 +20,7 @@
                     <th>Описание</th>
                     <th>Статус</th>
                     <th>Дата</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +31,46 @@
                     <td><p>{{ complaints[i].description }}</p></td>
                     <td><p>{{ complaints[i].status }}</p></td>
                     <td><p>{{ complaints[i].complain_date }}</p></td>
+                    <td><button onclick="delete_complaint({{ complaints[i].id }})">Удалить жалобу</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="content_top"style="
+    margin-top: 150px;
+">
+        <h1>Отзывы</h1>
+    </div>
+    <div class="clients_table_box">
+        <table class="clients_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Описание</th>
+                    <th>Оценка</th>
+                    <th>Дата</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(reviews | length) %}
+                <tr class="clients_table_field" data-id="{{ reviews[i].id }}">
+                    <td><p>{{ reviews[i].id }}</p></td>
+                    <td><p>{{ reviews[i].username }}</p></td>
+                    <td><p>{{ reviews[i].comment }}</p></td>
+                    <td><div class="rating_review">
+                            {% for s in range(0, reviews[i]["grade"]) %}
+                                <span class="active">★</span>
+                            {% endfor %}
+                            {% for s in range(reviews[i]["grade"], 5) %}
+                                <span>★</span>
+                            {% endfor %}
+                        </div></td>
+                    <td><p>{{ reviews[i].created_at }}</p></td>
+                    <td><button onclick="delete_review({{ reviews[i].id }})">Удалить жалобу</button></td>
                 </tr>
                 {% endfor %}
             </tbody>

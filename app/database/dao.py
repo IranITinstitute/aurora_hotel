@@ -336,10 +336,24 @@ def add_service():
         return {"serviceId": True}
 
 
-def delete_service(promo_id):
+def delete_service(service_id):
     with Session(autoflush=False, bind=engine) as db:
         service = db.query(Service).filter(Service.id == service_id).first()
         db.delete(service)
+        db.commit()
+
+
+def delete_complaint(complaint_id):
+    with Session(autoflush=False, bind=engine) as db:
+        complaint = db.query(Complaint).filter(Complaint.id == complaint_id).first()
+        db.delete(complaint)
+        db.commit()
+
+
+def delete_review(review_id):
+    with Session(autoflush=False, bind=engine) as db:
+        review = db.query(Review).filter(Review.id == review_id).first()
+        db.delete(review)
         db.commit()
 
 
@@ -406,14 +420,16 @@ def add_complaint(username, description):
 
 
 def get_complaints():
-    print(123)
     with Session(autoflush=False, bind=engine) as db:
         return_list = []
         complaints = db.query(Complaint).order_by(Complaint.id).all()
         for complaint in complaints:
             return_list.append(complaint.to_dict())
-        print(return_list)
         return return_list
+
+
+
+
 
 
 def get_service_orders():

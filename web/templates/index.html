@@ -141,15 +141,14 @@
                     <div class="review__card">
                         <h4>{{ reviews[i]["created_at"] }}</h4>
                         <div class="rating_review">
-                        <div class="rating_review">
-                        {% for s in range(0, reviews[i]["grade"]) %}
-                            <span class="active">★</span>
-                        {% endfor %}
-                        {% for s in range(reviews[i]["grade"], 5) %}
-                            <span>★</span>
-                        {% endfor %}
-                    </div>
+                            {% for s in range(0, reviews[i]["grade"]) %}
+                                <span class="active">★</span>
+                            {% endfor %}
+                            {% for s in range(reviews[i]["grade"], 5) %}
+                                <span>★</span>
+                            {% endfor %}
                         </div>
+                        
                         <h2>{{ reviews[i]["username"] }}</h2>
                         <p>{{ reviews[i]["comment"] }}</p>
                     </div>

@@ -133,6 +133,39 @@ function delete_promo(promoId) {
     window.location.reload();
 }
 
+
+function delete_complaint(complaintId) {
+    fetch(`/api/deleteComplaint?complaint_id=${complaintId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+    }).then();
+    window.location.reload();
+}
+
+
+function delete_review(reviewId) {
+    fetch(`/api/deleteReview?review_id=${reviewId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+    }).then();
+    window.location.reload();
+}
+
+
+function delete_service(serviceId) {
+    fetch(`/api/deleteService?service_id=${serviceId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+    }).then();
+    window.location.reload();
+}
+
 function addUser() {
     let userId = 0;
     fetch(`/api/addClient`, {

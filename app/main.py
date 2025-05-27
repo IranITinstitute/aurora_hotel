@@ -5,7 +5,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.database.dao import get_complaints, add_complaint, add_review, get_reviews, get_service_orders, delete_service, add_service, edit_service, get_available_services, check_promo, edit_promo, add_promo, delete_promo, get_promos, get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
+from app.database.dao import delete_review, get_reviews, delete_complaint, get_complaints, add_complaint, add_review, get_reviews, get_service_orders, delete_service, add_service, edit_service, get_available_services, check_promo, edit_promo, add_promo, delete_promo, get_promos, get_employee_by_email, get_clients, delete_client, add_client, edit_client, check_room_availability, get_available_rooms, get_bookings, get_rooms_with_bookings, add_booking, booking_cancel
 import app.database.schemas as ps
 from passlib.context import CryptContext
 import secrets
@@ -181,6 +181,13 @@ async def route_editClient(client_data: ps.ClientUpdate):
 async def route_delete_promo(promo_id: int):
 	return delete_promo(promo_id)
 
+
+
+@app.post("/api/deleteComplaint")
+async def route_delete_complaint(complaint_id: int):
+	return delete_complaint(complaint_id)
+
+
 @app.post("/api/addPromo")
 async def route_addPromo(request: Request):
 	return add_promo()
@@ -204,6 +211,12 @@ async def route_get_available_services(request: Request):
 @app.post("/api/deleteService")
 async def route_delete_Service(service_id: int):
 	return delete_service(service_id)
+
+
+@app.post("/api/deleteReview")
+async def route_delete_Service(review_id: int):
+	return delete_review(review_id)   
+
 
 @app.post("/api/addService")
 async def route_addService(request: Request):
@@ -247,7 +260,7 @@ async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
 @app.get("/admin/complaints", response_class=HTMLResponse)
 async def promos_page(request: Request, auth: bool = Depends(get_current_user)):
 	return templates.TemplateResponse(
-		request=request, name="admin_complaints.html", context={"complaints": get_complaints()}
+		request=request, name="admin_complaints.html", context={"complaints": get_complaints(), "reviews": get_reviews(0)}
 	)
 
 @app.get("/admin/services", response_class=HTMLResponse)
